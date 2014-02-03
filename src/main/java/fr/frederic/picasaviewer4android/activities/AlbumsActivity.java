@@ -26,8 +26,8 @@ public class AlbumsActivity extends ListActivity implements AlbumModelListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        albumModel.addListener(this);
         albumModel = new AlbumModelImpl();
+        albumModel.addListener(this);
         this.setListAdapter(new ListAlbumsAdapter(this, albumModel.getAllAlbums()));
     }
 
