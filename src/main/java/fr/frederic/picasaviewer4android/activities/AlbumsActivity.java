@@ -1,7 +1,6 @@
 package fr.frederic.picasaviewer4android.activities;
 
 import android.app.ListActivity;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,29 +8,27 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.BaseExpandableListAdapter;
+import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import fr.frederic.picasaviewer4android.vos.Album;
-import fr.frederic.picasaviewer4android.lists.ListAlbumsAdapter;
 import fr.frederic.picasaviewer4android.R;
+import fr.frederic.picasaviewer4android.lists.ListAlbumsAdapter;
+import fr.frederic.picasaviewer4android.models.AlbumModel;
+import fr.frederic.picasaviewer4android.models.AlbumModelImpl;
+import fr.frederic.picasaviewer4android.models.AlbumModelListener;
 
-public class AlbumsActivity extends ListActivity {
+public class AlbumsActivity extends ListActivity implements AlbumModelListener {
 
+
+    private AlbumModel albumModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        final List<Album> albums = new ArrayList<Album>();
-        final Drawable drawable = getResources().getDrawable(R.drawable.ic_launcher);
-        for(int i =0; i < 5; i++)
-        {
-            albums.add(new Album("album_" +i, drawable));
-        }
-        this.setListAdapter(new ListAlbumsAdapter(this, albums));
-
+        albumModel.addListener(this);
+        albumModel = new AlbumModelImpl();
+        this.setListAdapter(new ListAlbumsAdapter(this, albumModel.getAllAlbums()));
     }
 
 
@@ -53,6 +50,12 @@ public class AlbumsActivity extends ListActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void updateData() {
+        Toast.makeText(this, "Donnees mises à jour", 10);
+        ((BaseAdapter) this.getListAdapter()).notifyDataSetChanged();
     }
 
     /**
