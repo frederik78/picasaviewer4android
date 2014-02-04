@@ -55,7 +55,13 @@ public class AlbumsActivity extends ListActivity implements AlbumModelListener {
     @Override
     public void updateData() {
         Toast.makeText(this, "Donnees mises à jour", 10);
-        ((BaseAdapter) this.getListAdapter()).notifyDataSetChanged();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+            }
+        });
+
     }
 
     /**
