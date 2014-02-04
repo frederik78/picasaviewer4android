@@ -1,6 +1,5 @@
 package fr.frederic.picasaviewer4android.activities;
 
-import android.app.ListActivity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,24 +8,25 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.BaseExpandableListAdapter;
 import android.widget.Toast;
+
+import com.google.inject.Inject;
 
 import fr.frederic.picasaviewer4android.R;
 import fr.frederic.picasaviewer4android.lists.ListAlbumsAdapter;
 import fr.frederic.picasaviewer4android.models.AlbumModel;
-import fr.frederic.picasaviewer4android.models.AlbumModelImpl;
 import fr.frederic.picasaviewer4android.models.AlbumModelListener;
+import roboguice.activity.RoboListActivity;
 
-public class AlbumsActivity extends ListActivity implements AlbumModelListener {
+public class AlbumsActivity extends RoboListActivity implements AlbumModelListener {
 
-
+    @Inject
     private AlbumModel albumModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        albumModel = new AlbumModelImpl();
         albumModel.addListener(this);
         this.setListAdapter(new ListAlbumsAdapter(this, albumModel.getAllAlbums()));
     }
