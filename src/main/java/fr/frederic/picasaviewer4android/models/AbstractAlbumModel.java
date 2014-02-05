@@ -25,7 +25,7 @@ public class AbstractAlbumModel implements AlbumModel{
 
     @Override
     public List<Album> getAllAlbums() {
-        final List<Album> albums = new ArrayList<Album>();
+        final List<Album> albums = new ArrayList<>();
 
         final Drawable drawable = BitmapDrawable.createFromStream(getClass().getResourceAsStream("/drawable-mdpi/ic_launcher.png"),"ic_launcher.png");
         for(int i =0; i < 10; i++)
