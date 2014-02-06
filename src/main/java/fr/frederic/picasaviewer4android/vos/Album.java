@@ -15,6 +15,8 @@ public class Album
 
    public Album(long id, String albumName, Drawable image)
    {
+      this.id = id;
+      
       this.albumName = albumName;
 
       this.image = image;
