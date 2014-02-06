@@ -1,31 +1,66 @@
 package fr.frederic.picasaviewer4android.vos;
 
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.widget.ImageView;
 
 /**
  * Created by Frederic on 02/02/14.
  */
-public class Album {
+public class Album
+{
+   private long id;
 
-    private String albumName;
+   private String albumName;
 
-    private Drawable image;
+   private Drawable image;
 
-    public Album(String albumName, Drawable image)
-    {
-        this.albumName = albumName;
+   public Album(long id, String albumName, Drawable image)
+   {
+      this.albumName = albumName;
 
-        this.image = image;
-    }
+      this.image = image;
+   }
 
 
-    public String getAlbumName() {
-        return albumName;
-    }
+   public long getId()
+   {
+      return id;
+   }
 
-    public Drawable getImage() {
-        return image;
-    }
+   public String getAlbumName()
+   {
+      return albumName;
+   }
+
+   public Drawable getImage()
+   {
+      return image;
+   }
+
+   @Override
+   public boolean equals(Object o)
+   {
+      if (this == o)
+      {
+         return true;
+      }
+      if (!(o instanceof Album))
+      {
+         return false;
+      }
+
+      Album album = (Album) o;
+
+      if (id != album.id)
+      {
+         return false;
+      }
+
+      return true;
+   }
+
+   @Override
+   public int hashCode()
+   {
+      return (int) (id ^ (id >>> 32));
+   }
 }

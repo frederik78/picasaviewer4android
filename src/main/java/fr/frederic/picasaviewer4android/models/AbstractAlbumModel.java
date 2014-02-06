@@ -30,7 +30,7 @@ public class AbstractAlbumModel implements AlbumModel{
         final Drawable drawable = BitmapDrawable.createFromStream(getClass().getResourceAsStream("/drawable-mdpi/ic_launcher.png"),"ic_launcher.png");
         for(int i =0; i < 10; i++)
         {
-            albums.add(new Album("album_" +i, drawable));
+            albums.add(new Album(i, "album_" +i, drawable));
         }
         return albums;
     }
@@ -38,7 +38,7 @@ public class AbstractAlbumModel implements AlbumModel{
     @Override
     public Album getAlbum(long id) {
         final Drawable drawable  = BitmapDrawable.createFromPath("/drawable-mdpi/ic_launcher.png");
-        return new Album("album_"+id, drawable);
+        return new Album(id, "album_"+id, drawable);
     }
 
     @Override
