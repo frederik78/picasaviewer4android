@@ -73,6 +73,24 @@ public class TestAlbums {
        assertThat( activity.getListView().getItemAtPosition(25)).isNotEqualTo(albums.get(26));
     }
 
+   @Test
+   public void changement_contenu_suite_a_changement_donnees()
+   {
+//      final List<Album> albums = create50Albums();
+//      when(albumModel.notifyUpdate()).thenCallRealMethod();
+//      when(albumModel.getAllAlbums()).thenReturn(albums);
+//      activity = Robolectric.buildActivity(AlbumsActivity.class)
+//            .create().get();
+//      assertThat( activity.getListView().getItemAtPosition(25)).isEqualTo(albums.get(25));
+//      assertThat( activity.getListView().getItemAtPosition(25)).isNotEqualTo(albums.get(26));
+//
+//      final List<Album> albums1 = createAnother50Albums();
+//      when(albumModel.getAllAlbums()).thenReturn(albums1);
+//      albumModel.notifyUpdate();
+//      assertThat( activity.getListView().getItemAtPosition(25)).isEqualTo(albums1.get(25));
+//      assertThat( activity.getListView().getItemAtPosition(25)).isNotEqualTo(albums1.get(26));
+   }
+
     /**
      * Création de 50 albums
      * @return une collection d'albums
@@ -86,6 +104,23 @@ public class TestAlbums {
         }
         return albums;
     }
+
+
+   /**
+    * Création de 50 autres albums
+    * @return une nouvelle collection d'albums
+    */
+   private static List<Album> createAnother50Albums()
+   {
+      final List<Album> albums = new ArrayList<>(50);
+      for(int i = 50; i < 100; i++)
+      {
+         albums.add(new Album(i, "Album_"+i, image));
+      }
+      return albums;
+   }
+
+
 
 
 }
