@@ -1,38 +1,28 @@
 package fr.frederic.picasaviewer4android;
 
 import android.graphics.drawable.Drawable;
-
 import com.google.inject.Module;
 import com.google.inject.util.Modules;
-
+import fr.frederic.picasaviewer4android.activities.AlbumsActivity;
+import fr.frederic.picasaviewer4android.models.AlbumModel;
+import fr.frederic.picasaviewer4android.modules.AlbumModule;
+import fr.frederic.picasaviewer4android.modules.TestAlbumModule;
+import fr.frederic.picasaviewer4android.vos.Album;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-
-import fr.frederic.picasaviewer4android.activities.AlbumsActivity;
-import fr.frederic.picasaviewer4android.models.AlbumModel;
-import fr.frederic.picasaviewer4android.models.AlbumModelImpl;
-import fr.frederic.picasaviewer4android.modules.AlbumModule;
-import fr.frederic.picasaviewer4android.modules.TestAlbumModule;
-import fr.frederic.picasaviewer4android.vos.Album;
 import roboguice.RoboGuice;
 import roboguice.inject.InjectResource;
 import roboguice.inject.RoboInjector;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
@@ -72,6 +62,17 @@ public class TestAlbums {
         assertThat(activity.getListAdapter().getCount()).isEqualTo(50);
     }
 
+   @Test
+    public void contenu_liste_albums()
+    {
+       final List<Album> albums = create50Albums();
+       when(albumModel.getAllAlbums()).thenReturn(albums);
+       activity = Robolectric.buildActivity(AlbumsActivity.class)
+             .create().get();
+       assertThat( activity.getListView().getItemAtPosition(25)).isEqualTo(albums.get(25));
+       assertThat( activity.getListView().getItemAtPosition(25)).isNotEqualTo(albums.get(26));
+    }
+
     /**
      * Création de 50 albums
      * @return une collection d'albums
@@ -81,8 +82,10 @@ public class TestAlbums {
         final List<Album> albums = new ArrayList<>(50);
         for(int i = 0; i < 50; i++)
         {
-            albums.add(new Album("Album_"+i, image));
+            albums.add(new Album(i, "Album_"+i, image));
         }
         return albums;
     }
+
+
 }
