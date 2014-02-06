@@ -13,7 +13,7 @@ public interface AlbumModel {
      * Nombre d'albums
      * @return le nombre d'albums
      */
-    int count();
+    int getCount();
 
     /**
      * Retourne la liste des albums

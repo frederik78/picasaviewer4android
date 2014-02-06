@@ -19,7 +19,7 @@ public class AbstractAlbumModel implements AlbumModel{
     protected static Collection<AlbumModelListener> albumModelListeners = new HashSet<AlbumModelListener>();
 
     @Override
-    public int count() {
+    public int getCount() {
         return 10;
     }
 
