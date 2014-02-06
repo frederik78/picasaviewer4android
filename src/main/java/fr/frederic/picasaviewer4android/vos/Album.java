@@ -63,4 +63,15 @@ public class Album
    {
       return (int) (id ^ (id >>> 32));
    }
+
+
+   @Override
+   public String toString()
+   {
+      return "Album{" +
+            "id=" + id +
+            ", albumName='" + albumName + '\'' +
+            ", image=" + image +
+            '}';
+   }
 }
