@@ -81,7 +81,20 @@ public class TestAlbums {
         final List<Album> albums = new ArrayList<>(50);
         for(int i = 0; i < 50; i++)
         {
-            albums.add(new Album("Album_"+i, image));
+            albums.add(new Album(i, "Album_"+i, image));
+        }
+        return albums;
+    }
+    /**
+     * Création de 50 nouveaux albums
+     * @return une collection d'albums
+     */
+    private static List<Album> createAnother50Albums()
+    {
+        final List<Album> albums = new ArrayList<>(50);
+        for(int i = 50; i < 100; i++)
+        {
+            albums.add(new Album(i, "Album_"+i, image));
         }
         return albums;
     }
