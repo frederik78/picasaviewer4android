@@ -17,7 +17,7 @@ import fr.frederic.picasaviewer4android.vos.Album;
 public class AbstractAlbumsModel implements AlbumsModel {
 
 
-    protected static Collection<AlbumModelListener> albumModelListeners = new HashSet<AlbumModelListener>();
+    protected Collection<AlbumModelListener> albumModelListeners = new HashSet<AlbumModelListener>();
 
     @Override
     public int getCount() {
