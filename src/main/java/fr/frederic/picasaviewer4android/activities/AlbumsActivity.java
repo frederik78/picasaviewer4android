@@ -14,21 +14,21 @@ import com.google.inject.Inject;
 
 import fr.frederic.picasaviewer4android.R;
 import fr.frederic.picasaviewer4android.lists.ListAlbumsAdapter;
-import fr.frederic.picasaviewer4android.models.AlbumModel;
+import fr.frederic.picasaviewer4android.models.albums.AlbumsModel;
 import fr.frederic.picasaviewer4android.models.AlbumModelListener;
 import roboguice.activity.RoboListActivity;
 
 public class AlbumsActivity extends RoboListActivity implements AlbumModelListener {
 
     @Inject
-    private AlbumModel albumModel;
+    private AlbumsModel albumsModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        albumModel.addListener(this);
-        this.setListAdapter(new ListAlbumsAdapter(this, albumModel.getAllAlbums()));
+        albumsModel.addListener(this);
+        this.setListAdapter(new ListAlbumsAdapter(this, albumsModel.getAllAlbums()));
     }
 
 
@@ -55,7 +55,7 @@ public class AlbumsActivity extends RoboListActivity implements AlbumModelListen
     @Override
     public void updateData() {
         Toast.makeText(this, "Donnees mises à jour", 10);
-        setListAdapter(new ListAlbumsAdapter(this, albumModel.getAllAlbums()));
+        setListAdapter(new ListAlbumsAdapter(this, albumsModel.getAllAlbums()));
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

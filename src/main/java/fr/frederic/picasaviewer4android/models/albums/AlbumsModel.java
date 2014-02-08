@@ -1,13 +1,14 @@
-package fr.frederic.picasaviewer4android.models;
+package fr.frederic.picasaviewer4android.models.albums;
 
 import java.util.List;
 
+import fr.frederic.picasaviewer4android.models.AlbumModelListener;
 import fr.frederic.picasaviewer4android.vos.Album;
 
 /**
  * Created by Frederic on 03/02/14.
  */
-public interface AlbumModel {
+public interface AlbumsModel {
 
     /**
      * Nombre d'albums

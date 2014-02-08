@@ -1,4 +1,4 @@
-package fr.frederic.picasaviewer4android.models;
+package fr.frederic.picasaviewer4android.models.albums;
 
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -8,12 +8,13 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
+import fr.frederic.picasaviewer4android.models.AlbumModelListener;
 import fr.frederic.picasaviewer4android.vos.Album;
 
 /**
  * Created by Frederic on 03/02/14.
  */
-public class AbstractAlbumModel implements AlbumModel{
+public class AbstractAlbumsModel implements AlbumsModel {
 
 
     protected static Collection<AlbumModelListener> albumModelListeners = new HashSet<AlbumModelListener>();

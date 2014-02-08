@@ -4,8 +4,8 @@ import android.graphics.drawable.Drawable;
 import com.google.inject.Module;
 import com.google.inject.util.Modules;
 import fr.frederic.picasaviewer4android.activities.AlbumsActivity;
-import fr.frederic.picasaviewer4android.models.AlbumModel;
-import fr.frederic.picasaviewer4android.models.AlbumModelImpl;
+import fr.frederic.picasaviewer4android.models.albums.AlbumsModel;
+import fr.frederic.picasaviewer4android.models.albums.AlbumsModelImpl;
 import fr.frederic.picasaviewer4android.modules.AlbumModule;
 import fr.frederic.picasaviewer4android.modules.TestAlbumModule;
 import fr.frederic.picasaviewer4android.vos.Album;
@@ -14,7 +14,6 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.robolectric.Robolectric;
@@ -25,7 +24,6 @@ import roboguice.inject.InjectResource;
 import roboguice.inject.RoboInjector;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
@@ -43,7 +41,7 @@ public class TestAlbums {
     private static Drawable image;
 
     @Spy
-    AlbumModel albumModel = spy(new AlbumModelImpl());
+    AlbumsModel albumsModel = spy(new AlbumsModelImpl());
 
 
 
@@ -53,7 +51,7 @@ public class TestAlbums {
 
         final Module roboGuiceModule = RoboGuice.newDefaultRoboModule(Robolectric.application);
         final Module albumModule = Modules.override(roboGuiceModule ).with(new AlbumModule());
-        final Module testModule = Modules.override(albumModule).with(new TestAlbumModule(albumModel));
+        final Module testModule = Modules.override(albumModule).with(new TestAlbumModule(albumsModel));
 
         RoboGuice.setBaseApplicationInjector(Robolectric.application, RoboGuice.DEFAULT_STAGE, testModule);
         RoboInjector injector = RoboGuice.getInjector(Robolectric.application);
@@ -63,7 +61,7 @@ public class TestAlbums {
     @Test
     public void nombre_elements_dans_adapter() {
 
-        when(albumModel.getAllAlbums()).thenReturn(create50Albums());
+        when(albumsModel.getAllAlbums()).thenReturn(create50Albums());
         activity = Robolectric.buildActivity(AlbumsActivity.class)
                 .create().get();
         assertThat(activity.getListAdapter().getCount()).isEqualTo(50);
@@ -72,7 +70,7 @@ public class TestAlbums {
    @Test
     public void contenu_liste_albums() {
        final List<Album> albums = create50Albums();
-       when(albumModel.getAllAlbums()).thenReturn(albums);
+       when(albumsModel.getAllAlbums()).thenReturn(albums);
        activity = Robolectric.buildActivity(AlbumsActivity.class)
                .create().get();
 
@@ -85,15 +83,15 @@ public class TestAlbums {
 
 
        final List<Album> albums = create50Albums();
-       when(albumModel.getAllAlbums()).thenReturn(albums);
+       when(albumsModel.getAllAlbums()).thenReturn(albums);
        activity = Robolectric.buildActivity(AlbumsActivity.class)
                .create().get();
        assertThat(activity.getListView().getItemAtPosition(25)).isEqualTo(albums.get(25));
        assertThat(activity.getListView().getItemAtPosition(25)).isNotEqualTo(albums.get(26));
 
        final List<Album> albums1 = createAnother50Albums();
-       when(albumModel.getAllAlbums()).thenReturn(albums1);
-       albumModel.notifyUpdate();
+       when(albumsModel.getAllAlbums()).thenReturn(albums1);
+       albumsModel.notifyUpdate();
        assertThat(activity.getListView().getItemAtPosition(25)).isEqualTo(albums1.get(25));
        assertThat(activity.getListView().getItemAtPosition(25)).isNotEqualTo(albums1.get(26));
    }

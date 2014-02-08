@@ -2,23 +2,22 @@ package fr.frederic.picasaviewer4android.modules;
 
 import com.google.inject.AbstractModule;
 
-import fr.frederic.picasaviewer4android.models.AlbumModel;
-import fr.frederic.picasaviewer4android.models.AlbumModelImpl;
+import fr.frederic.picasaviewer4android.models.albums.AlbumsModel;
 
 /**
  * Created by Frederic on 05/02/14.
  */
 public class TestAlbumModule extends AbstractModule {
 
-    final AlbumModel albumModel;
+    final AlbumsModel albumsModel;
 
-    public TestAlbumModule(AlbumModel albumModel)
+    public TestAlbumModule(AlbumsModel albumsModel)
     {
-        this.albumModel = albumModel;
+        this.albumsModel = albumsModel;
     }
 
     @Override
     protected void configure() {
-        bind(AlbumModel.class).toInstance(albumModel);
+        bind(AlbumsModel.class).toInstance(albumsModel);
     }
 }
