@@ -5,6 +5,7 @@ import com.google.inject.Module;
 import com.google.inject.util.Modules;
 import fr.frederic.picasaviewer4android.activities.AlbumsActivity;
 import fr.frederic.picasaviewer4android.models.AlbumModel;
+import fr.frederic.picasaviewer4android.models.AlbumModelImpl;
 import fr.frederic.picasaviewer4android.modules.AlbumModule;
 import fr.frederic.picasaviewer4android.modules.TestAlbumModule;
 import fr.frederic.picasaviewer4android.vos.Album;
@@ -15,6 +16,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
@@ -23,6 +25,9 @@ import roboguice.inject.InjectResource;
 import roboguice.inject.RoboInjector;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static org.mockito.Mockito.doCallRealMethod;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 /**
@@ -37,8 +42,9 @@ public class TestAlbums {
     @InjectResource(R.drawable.ic_launcher)
     private static Drawable image;
 
-    @Mock
-    private AlbumModel albumModel;
+    @Spy
+    AlbumModel albumModel = spy(new AlbumModelImpl());
+
 
 
     @Before
@@ -51,11 +57,12 @@ public class TestAlbums {
 
         RoboGuice.setBaseApplicationInjector(Robolectric.application, RoboGuice.DEFAULT_STAGE, testModule);
         RoboInjector injector = RoboGuice.getInjector(Robolectric.application);
-        injector.injectMembers(this);
+        injector.injectMembersWithoutViews(this);
     }
 
     @Test
     public void nombre_elements_dans_adapter() {
+
         when(albumModel.getAllAlbums()).thenReturn(create50Albums());
         activity = Robolectric.buildActivity(AlbumsActivity.class)
                 .create().get();
@@ -63,32 +70,32 @@ public class TestAlbums {
     }
 
    @Test
-    public void contenu_liste_albums()
-    {
+    public void contenu_liste_albums() {
        final List<Album> albums = create50Albums();
        when(albumModel.getAllAlbums()).thenReturn(albums);
        activity = Robolectric.buildActivity(AlbumsActivity.class)
-             .create().get();
-       assertThat( activity.getListView().getItemAtPosition(25)).isEqualTo(albums.get(25));
-       assertThat( activity.getListView().getItemAtPosition(25)).isNotEqualTo(albums.get(26));
-    }
+               .create().get();
+
+       assertThat(activity.getListView().getItemAtPosition(25)).isEqualTo(albums.get(25));
+       assertThat(activity.getListView().getItemAtPosition(25)).isNotEqualTo(albums.get(26));
+   }
 
    @Test
-   public void changement_contenu_suite_a_changement_donnees()
-   {
-//      final List<Album> albums = create50Albums();
-//      when(albumModel.notifyUpdate()).thenCallRealMethod();
-//      when(albumModel.getAllAlbums()).thenReturn(albums);
-//      activity = Robolectric.buildActivity(AlbumsActivity.class)
-//            .create().get();
-//      assertThat( activity.getListView().getItemAtPosition(25)).isEqualTo(albums.get(25));
-//      assertThat( activity.getListView().getItemAtPosition(25)).isNotEqualTo(albums.get(26));
-//
-//      final List<Album> albums1 = createAnother50Albums();
-//      when(albumModel.getAllAlbums()).thenReturn(albums1);
-//      albumModel.notifyUpdate();
-//      assertThat( activity.getListView().getItemAtPosition(25)).isEqualTo(albums1.get(25));
-//      assertThat( activity.getListView().getItemAtPosition(25)).isNotEqualTo(albums1.get(26));
+   public void changement_contenu_suite_a_changement_donnees() {
+
+
+       final List<Album> albums = create50Albums();
+       when(albumModel.getAllAlbums()).thenReturn(albums);
+       activity = Robolectric.buildActivity(AlbumsActivity.class)
+               .create().get();
+       assertThat(activity.getListView().getItemAtPosition(25)).isEqualTo(albums.get(25));
+       assertThat(activity.getListView().getItemAtPosition(25)).isNotEqualTo(albums.get(26));
+
+       final List<Album> albums1 = createAnother50Albums();
+       when(albumModel.getAllAlbums()).thenReturn(albums1);
+       albumModel.notifyUpdate();
+       assertThat(activity.getListView().getItemAtPosition(25)).isEqualTo(albums1.get(25));
+       assertThat(activity.getListView().getItemAtPosition(25)).isNotEqualTo(albums1.get(26));
    }
 
     /**
