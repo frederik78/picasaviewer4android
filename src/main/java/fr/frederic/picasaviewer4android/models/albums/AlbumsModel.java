@@ -36,7 +36,7 @@ public interface AlbumsModel {
 
     /**
      * Ajoute un écouteur
-     * @param albumModelListener
+     * @param albumModelListener écouteur
      */
     void addListener(AlbumModelListener albumModelListener);
 }
