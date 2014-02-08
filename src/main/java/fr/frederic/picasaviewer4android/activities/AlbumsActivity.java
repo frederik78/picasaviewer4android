@@ -55,6 +55,7 @@ public class AlbumsActivity extends RoboListActivity implements AlbumModelListen
     @Override
     public void updateData() {
         Toast.makeText(this, "Donnees mises à jour", 10);
+        setListAdapter(new ListAlbumsAdapter(this, albumModel.getAllAlbums()));
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
