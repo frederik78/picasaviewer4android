@@ -2,5 +2,6 @@
 <resources>
     <string-array name="roboguice_modules">
         <item>fr.frederic.picasaviewer4android.modules.AlbumModule</item>
+        <item>fr.frederic.picasaviewer4android.modules.PictureModule</item>
     </string-array>
 </resources>
