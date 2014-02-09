@@ -2,16 +2,18 @@ package fr.frederic.picasaviewer4android.vos;
 
 import android.graphics.drawable.Drawable;
 
+import java.io.Serializable;
+
 /**
  * Created by Frederic on 02/02/14.
  */
-public class Album
+public class Album implements Serializable
 {
    private long id;
 
    private String albumName;
 
-   private Drawable image;
+   private transient Drawable image;
 
    public Album(long id, String albumName, Drawable image)
    {
