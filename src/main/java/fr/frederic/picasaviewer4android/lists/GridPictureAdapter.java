@@ -1,6 +1,7 @@
 package fr.frederic.picasaviewer4android.lists;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,17 +45,38 @@ public class GridPictureAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ImageView imageView;
-        if (convertView == null) {  // if it's not recycled, initialize some attributes
-            imageView = new ImageView(inflater.getContext());
-            imageView.setLayoutParams(new GridView.LayoutParams(85, 85));
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setPadding(8, 8, 8, 8);
+        final Holder holder;
+
+        if (convertView == null) {
+
+            convertView = new ImageView(inflater.getContext());
+            convertView.setLayoutParams(new GridView.LayoutParams(85, 85));
+            ((ImageView)convertView).setScaleType(ImageView.ScaleType.CENTER_CROP);
+            convertView.setPadding(8, 8, 8, 8);
+            ((ImageView)convertView).setImageDrawable(pictures.get(position).getDrawable());
+            holder = new Holder(((ImageView)convertView));
+            convertView.setTag(holder);
         } else {
-            imageView = (ImageView) convertView;
+            holder = ((Holder) convertView.getTag());
         }
 
-        imageView.setImageResource(position);
-        return imageView;
+        holder.getImageView().setImageDrawable(pictures.get(position).getDrawable());
+
+        return convertView;
+    }
+
+    private static class Holder{
+
+        private ImageView imageView;
+
+        public Holder(ImageView imageView)
+        {
+            this.imageView = imageView;
+        }
+
+        public ImageView getImageView() {
+            return imageView;
+        }
+
     }
 }
