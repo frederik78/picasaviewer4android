@@ -50,7 +50,7 @@ public class TestAlbums {
     private static Drawable image;
 
     @Spy
-    AlbumsModel albumsModel = spy(new AlbumsModelImpl());
+    private final AlbumsModel albumsModel = spy(new AlbumsModelImpl());
 
 
     @Before
