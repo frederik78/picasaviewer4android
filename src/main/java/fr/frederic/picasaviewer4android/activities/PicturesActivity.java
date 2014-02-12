@@ -14,6 +14,7 @@ import fr.frederic.picasaviewer4android.models.pictures.PicturesModel;
 import fr.frederic.picasaviewer4android.vos.Album;
 import fr.frederic.picasaviewer4android.vos.Picture;
 import roboguice.activity.RoboActivity;
+import roboguice.inject.InjectResource;
 
 /**
  * Created by Frederic on 08/02/14.
@@ -22,7 +23,6 @@ public class PicturesActivity extends RoboActivity {
 
     @Inject
     private PicturesModel picturesModel;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

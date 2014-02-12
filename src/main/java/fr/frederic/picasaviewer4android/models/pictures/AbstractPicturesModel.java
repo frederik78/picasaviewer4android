@@ -29,7 +29,7 @@ public class AbstractPicturesModel implements PicturesModel {
         final List<Picture> pictures = new ArrayList<>();
         final Drawable drawable = BitmapDrawable.createFromStream(getClass().getResourceAsStream("/drawable-mdpi/ic_launcher.png"), "ic_launcher.png");
         for (int i = 0; i < 10; i++) {
-            pictures.add(new Picture(drawable));
+            pictures.add(new Picture(i, drawable));
         }
         return pictures;
     }
@@ -37,7 +37,7 @@ public class AbstractPicturesModel implements PicturesModel {
     @Override
     public Picture getPicture(long id) {
         final Drawable drawable = BitmapDrawable.createFromPath("/drawable-mdpi/ic_launcher.png");
-        return new Picture(drawable);
+        return new Picture(id, drawable);
     }
 
     @Override
