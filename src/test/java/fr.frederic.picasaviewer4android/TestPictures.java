@@ -11,6 +11,7 @@ import com.google.inject.util.Modules;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.robolectric.Robolectric;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import fr.frederic.picasaviewer4android.activities.ImageActivity;
 import fr.frederic.picasaviewer4android.activities.PicturesActivity;
 import fr.frederic.picasaviewer4android.models.pictures.PictureModelImpl;
 import fr.frederic.picasaviewer4android.models.pictures.PicturesModel;
@@ -33,6 +35,10 @@ import roboguice.inject.InjectResource;
 import roboguice.inject.RoboInjector;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
@@ -76,6 +82,22 @@ public class TestPictures {
         picturesActivity = Robolectric.buildActivity(PicturesActivity.class).withIntent(intent).create().get();
         final GridView gridView = (GridView) picturesActivity.findViewById(R.id.gridview);
         assertThat(gridView.getCount()).isEqualTo(pictures.size());
+    }
+    @Test
+    public void clic_une_image(){
+        final Picture picture = Mockito.mock(Picture.class);
+        when(picture.getDrawable()).thenReturn(image);
+        when(picturesModel.getPicture(anyLong())).thenReturn(eq(picture));
+
+        final Album album = new Album(1,"album_1", image);
+        final Intent intent = new Intent(Robolectric.getShadowApplication().getApplicationContext(), PicturesActivity.class);
+        intent.putExtra("album", album);
+        picturesActivity = Robolectric.buildActivity(PicturesActivity.class).withIntent(intent).create().get();
+
+        final GridView gridView = (GridView) picturesActivity.findViewById(R.id.gridview);
+        Robolectric.shadowOf(gridView).performItemClick(anyInt());
+        final Intent intentVersImage = Robolectric.shadowOf(picturesActivity).getNextStartedActivity();
+        assertThat(ImageActivity.class.getCanonicalName().equals(intentVersImage.getComponent().getClassName()));
     }
 
     /**

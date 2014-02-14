@@ -1,6 +1,9 @@
 package fr.frederic.picasaviewer4android.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridLayout;
 import android.widget.GridView;
 
@@ -20,7 +23,7 @@ import roboguice.inject.InjectView;
 /**
  * Created by Frederic on 08/02/14.
  */
-public class PicturesActivity extends RoboActivity {
+public class PicturesActivity extends RoboActivity implements AdapterView.OnItemClickListener{
 
     @Inject
     private PicturesModel picturesModel;
@@ -38,6 +41,14 @@ public class PicturesActivity extends RoboActivity {
         {
             final List<Picture> pictures = picturesModel.getAllPictures((Album) bundle.get("album"));
             gridView.setAdapter(new GridPictureAdapter(this, pictures));
+            gridView.setOnItemClickListener(this);
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        final Intent intent = new Intent(this, ImageActivity.class);
+        intent.putExtra("image", parent.getItemIdAtPosition(position));
+        startActivity(intent);
     }
 }
