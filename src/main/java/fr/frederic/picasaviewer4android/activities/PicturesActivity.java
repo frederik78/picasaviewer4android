@@ -15,6 +15,7 @@ import fr.frederic.picasaviewer4android.vos.Album;
 import fr.frederic.picasaviewer4android.vos.Picture;
 import roboguice.activity.RoboActivity;
 import roboguice.inject.InjectResource;
+import roboguice.inject.InjectView;
 
 /**
  * Created by Frederic on 08/02/14.
@@ -24,15 +25,18 @@ public class PicturesActivity extends RoboActivity {
     @Inject
     private PicturesModel picturesModel;
 
+    @InjectView(R.id.gridview)
+    private GridView gridView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.picture);
         final Bundle bundle = getIntent().getExtras();
+
         if(bundle != null && bundle.get("album") != null)
         {
             final List<Picture> pictures = picturesModel.getAllPictures((Album) bundle.get("album"));
-            final GridView gridView = (GridView) findViewById(R.id.gridview);
             gridView.setAdapter(new GridPictureAdapter(this, pictures));
         }
     }
