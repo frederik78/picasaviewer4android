@@ -36,7 +36,7 @@ public class AbstractPicturesModel implements PicturesModel {
 
     @Override
     public Picture getPicture(long id) {
-        final Drawable drawable = BitmapDrawable.createFromPath("/drawable-mdpi/ic_launcher.png");
+        final Drawable drawable = BitmapDrawable.createFromStream(getClass().getResourceAsStream("/drawable-mdpi/ic_launcher.png"),"ic_launcher.png");
         return new Picture(id, drawable);
     }
 

@@ -38,7 +38,7 @@ public class AbstractAlbumsModel implements AlbumsModel {
 
     @Override
     public Album getAlbum(long id) {
-        final Drawable drawable  = BitmapDrawable.createFromPath("/drawable-mdpi/ic_launcher.png");
+        final Drawable drawable = BitmapDrawable.createFromStream(getClass().getResourceAsStream("/drawable-mdpi/ic_launcher.png"),"ic_launcher.png");
         return new Album(id, "album_"+id, drawable);
     }
 
