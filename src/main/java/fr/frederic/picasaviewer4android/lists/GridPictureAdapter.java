@@ -40,7 +40,7 @@ public class GridPictureAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return position;
+        return pictures.get(position) != null ? pictures.get(position).getId() : 0L;
     }
 
     @Override
