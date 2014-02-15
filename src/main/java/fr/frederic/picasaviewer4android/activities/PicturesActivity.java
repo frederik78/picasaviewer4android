@@ -48,7 +48,7 @@ public class PicturesActivity extends RoboActivity implements AdapterView.OnItem
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         final Intent intent = new Intent(this, ImageActivity.class);
-        intent.putExtra("image", parent.getItemIdAtPosition(position));
+        intent.putExtra("image", id);
         startActivity(intent);
     }
 }
