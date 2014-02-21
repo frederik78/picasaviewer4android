@@ -31,6 +31,7 @@ public class PicturesActivity extends RoboActivity implements AdapterView.OnItem
     @InjectView(R.id.gridview)
     private GridView gridView;
 
+    private Album album;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +40,8 @@ public class PicturesActivity extends RoboActivity implements AdapterView.OnItem
 
         if(bundle != null && bundle.get("album") != null)
         {
-            final List<Picture> pictures = picturesModel.getAllPictures((Album) bundle.get("album"));
+            album = (Album) bundle.get("album");
+            final List<Picture> pictures = picturesModel.getAllPictures(album);
             gridView.setAdapter(new GridPictureAdapter(this, pictures));
             gridView.setOnItemClickListener(this);
         }
@@ -48,7 +50,9 @@ public class PicturesActivity extends RoboActivity implements AdapterView.OnItem
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         final Intent intent = new Intent(this, ImageActivity.class);
-        intent.putExtra("image", id);
+        intent.putExtra("imageId", id);
+        intent.putExtra("album", album);
+        intent.putExtra("position", position);
         startActivity(intent);
     }
 }
