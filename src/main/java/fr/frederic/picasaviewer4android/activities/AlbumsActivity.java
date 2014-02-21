@@ -1,6 +1,9 @@
 package fr.frederic.picasaviewer4android.activities;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,12 +15,16 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.json.JsonFactory;
 import com.google.inject.Inject;
 
 import fr.frederic.picasaviewer4android.R;
 import fr.frederic.picasaviewer4android.lists.ListAlbumsAdapter;
-import fr.frederic.picasaviewer4android.models.albums.AlbumsModel;
 import fr.frederic.picasaviewer4android.models.AlbumModelListener;
+import fr.frederic.picasaviewer4android.models.albums.AlbumsModel;
 import fr.frederic.picasaviewer4android.vos.Album;
 import roboguice.activity.RoboListActivity;
 
@@ -26,11 +33,27 @@ public class AlbumsActivity extends RoboListActivity implements AlbumModelListen
     @Inject
     private AlbumsModel albumsModel;
 
+    private static final String PREF = "MyPrefs";
+
+    private static final String GOOGLE_ANDROID = "com.android.email";
+   final HttpTransport transport = AndroidHttp.newCompatibleTransport();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         albumsModel.addListener(this);
+
+        SharedPreferences settings = getSharedPreferences(PREF, 0);
+        getAccountNames();
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         this.setListAdapter(new ListAlbumsAdapter(this, albumsModel.getAllAlbums()));
     }
 
@@ -76,6 +99,53 @@ public class AlbumsActivity extends RoboListActivity implements AlbumModelListen
         });
 
     }
+
+    public String[] getAccountNames() {
+        final AccountManager accountManager = AccountManager.get(this.getApplicationContext());
+        Account[] accounts = accountManager.getAccounts();
+        String[] names = new String[accounts.length];
+        for (int i = 0; i < names.length; i++) {
+            names[i] = accounts[i].name;
+        }
+        return names;
+    }
+    public void initHttpTransport(){
+
+        GoogleCredential credential = new GoogleCredential();
+        HttpTransport httpTransport = credential.getTransport();
+//        final Account[] accounts = accountManager.getAccounts();
+
+        SharedPreferences settings = getSharedPreferences(PREF, 0);
+
+//        HttpTransport httpTransport = new NetHttpTransport();
+//        JacksonFactory jsonFactory = new JacksonFactory();
+//        GoogleCredential credential = new GoogleCredential.Builder()
+//                .setTransport(httpTransport)
+//                .setJsonFactory(jsonFactory)
+//                .setClientSecrets(
+//                        new GoogleClientSecrets().setInstalled(
+//                                new GoogleClientSecrets.Details()
+//                                        .setAuthUri(AUTH_URI)
+//                                        .setClientId(CLIENT_ID)
+//                                                //.setClientSecret("but I haven't got one!")
+//                                        .setRedirectUris(REDIRECT_URIS)
+//                        )
+//                )
+//                .build()
+//                .setAccessToken(ACCESS_TOKEN) //defined above
+//                .setRefreshToken(REFRESH_TOKEN); //defined above
+
+
+//        transport = new HttpTransport();
+
+    //        GoogleHeaders headers = (GoogleHeaders) transport.defaultHeaders;
+//        headers.setApplicationName("Google-PicasaAndroidAample/1.0");
+//        headers.gdataVersion = "2";
+//        AtomParser parser = new AtomParser();
+//        parser.namespaceDictionary = Util.NAMESPACE_DICTIONARY;
+//        transport.addParser(parser);
+    }
+
 
     /**
      * A placeholder fragment containing a simple view.

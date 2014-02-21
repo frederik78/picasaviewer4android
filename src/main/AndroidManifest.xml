@@ -25,5 +25,7 @@
         <activity android:name=".activities.PicturesActivity"/>
         <activity android:name=".activities.ImageActivity"/>
     </application>
-
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
+    <uses-permission android:name="android.permission-group.ACCOUNTS" />
 </manifest>

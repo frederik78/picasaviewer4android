@@ -7,6 +7,16 @@ import android.widget.ListView;
 import com.google.inject.Module;
 import com.google.inject.util.Modules;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Spy;
+import org.robolectric.Robolectric;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import fr.frederic.picasaviewer4android.activities.AlbumsActivity;
 import fr.frederic.picasaviewer4android.activities.PicturesActivity;
 import fr.frederic.picasaviewer4android.models.albums.AlbumsModel;
@@ -14,27 +24,10 @@ import fr.frederic.picasaviewer4android.models.albums.AlbumsModelImpl;
 import fr.frederic.picasaviewer4android.modules.AlbumModule;
 import fr.frederic.picasaviewer4android.modules.TestAlbumModule;
 import fr.frederic.picasaviewer4android.vos.Album;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
-import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
-
-import roboguice.RoboGuice;
 import roboguice.inject.InjectResource;
-import roboguice.inject.RoboInjector;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -42,7 +35,7 @@ import static org.mockito.Mockito.when;
  */
 @RunWith(RobolectricTestRunner.class)
 @Config(manifest = "/src/main/AndroidManifest.xml")
-public class TestAlbums {
+public class TestAlbums extends AbstractTest {
 
     private AlbumsActivity activity;
 
@@ -52,18 +45,10 @@ public class TestAlbums {
     @Spy
     private final AlbumsModel albumsModel = spy(new AlbumsModelImpl());
 
-
-    @Before
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-
-        final Module roboGuiceModule = RoboGuice.newDefaultRoboModule(Robolectric.application);
+    @Override
+    public Module addCustomeModules() {
         final Module albumModule = Modules.override(roboGuiceModule).with(new AlbumModule());
-        final Module testModule = Modules.override(albumModule).with(new TestAlbumModule(albumsModel));
-
-        RoboGuice.setBaseApplicationInjector(Robolectric.application, RoboGuice.DEFAULT_STAGE, testModule);
-        RoboInjector injector = RoboGuice.getInjector(Robolectric.application);
-        injector.injectMembersWithoutViews(this);
+        return Modules.override(albumModule).with(new TestAlbumModule(albumsModel));
     }
 
     @Test
@@ -115,6 +100,7 @@ public class TestAlbums {
 
     }
 
+
     /**
      * Création de 50 albums
      *
@@ -141,6 +127,4 @@ public class TestAlbums {
         }
         return albums;
     }
-
-
 }

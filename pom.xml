@@ -50,6 +50,50 @@
             <artifactId>mockito-all</artifactId>
             <version>1.8.4</version>
         </dependency>
+
+
+        <dependency>
+            <groupId>com.google.api-client</groupId>
+            <artifactId>google-api-client</artifactId>
+            <version>1.17.0-rc</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>xpp3</artifactId>
+                    <groupId>xpp3</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>httpclient</artifactId>
+                    <groupId>org.apache.httpcomponents</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>junit</artifactId>
+                    <groupId>junit</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>android</artifactId>
+                    <groupId>com.google.android</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.google.api.client</groupId>-->
+            <!--<artifactId>google-api-client</artifactId>-->
+            <!--<version>1.4.1-beta</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>com.google.gdata</groupId>-->
+            <!--<artifactId>core</artifactId>-->
+            <!--<version>1.47.1</version>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>com.google.api-client</groupId>
+            <artifactId>google-api-client-android</artifactId>
+            <version>1.17.0-rc</version>
+        </dependency>
+
+
+
+
         <!--<dependency>-->
             <!--<groupId>com.android.support</groupId>-->
             <!--<artifactId>appcompat-v7</artifactId>-->
@@ -113,4 +157,12 @@
             </plugin>
         </plugins>
     </build>
+
+    <repositories>
+        <repository>
+            <id>google-releases</id>
+            <name>Google Releases</name>
+            <url>https://oss.sonatype.org/content/repositories/google-releases</url>
+        </repository>
+    </repositories>
 </project>
