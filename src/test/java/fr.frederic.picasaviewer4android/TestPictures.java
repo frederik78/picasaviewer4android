@@ -2,7 +2,6 @@ package fr.frederic.picasaviewer4android;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.widget.GridView;
 
 import com.google.inject.Module;
@@ -19,12 +18,11 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import fr.frederic.picasaviewer4android.activities.ImageActivity;
 import fr.frederic.picasaviewer4android.activities.PicturesActivity;
-import fr.frederic.picasaviewer4android.models.pictures.PictureModelImpl;
+import fr.frederic.picasaviewer4android.models.pictures.PicturesModelImpl;
 import fr.frederic.picasaviewer4android.models.pictures.PicturesModel;
 import fr.frederic.picasaviewer4android.modules.PictureModule;
 import fr.frederic.picasaviewer4android.modules.TestPictureModule;
@@ -55,7 +53,7 @@ public class TestPictures {
     private static Drawable image;
 
     @Spy
-    private final PicturesModel picturesModel = spy(new PictureModelImpl());
+    private final PicturesModel picturesModel = spy(new PicturesModelImpl());
 
 
     @Before
