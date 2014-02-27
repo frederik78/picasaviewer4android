@@ -13,6 +13,7 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import static org.fest.assertions.api.Assertions.assertThat;
+import static org.fest.assertions.api.Assertions.extractProperty;
 import static org.robolectric.Robolectric.shadowOf;
 
 /**
@@ -41,8 +42,8 @@ public class TestAuthorization {
     public void test_comptes() {
        final AlbumsActivity activity = Robolectric.buildActivity(AlbumsActivity.class).create().get();
 
-       final String[] accountsName = activity.getGoogleAccounts();
-       assertThat(Arrays.asList(accountsName)).containsExactly("compte n°1", "compte n°3");
+       final Account[] accounts = activity.getGoogleAccounts();
+       assertThat(accounts).containsExactly(account0, account2);
 
 
     }

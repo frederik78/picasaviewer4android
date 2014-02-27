@@ -2,6 +2,10 @@ package fr.frederic.picasaviewer4android.activities;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,8 +22,11 @@ import android.widget.Toast;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.extensions.android.accounts.GoogleAccountManager;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.http.HttpTransport;
 import com.google.inject.Inject;
+
+import java.util.Collections;
 
 import fr.frederic.picasaviewer4android.R;
 import fr.frederic.picasaviewer4android.lists.ListAlbumsAdapter;
@@ -33,19 +40,30 @@ public class AlbumsActivity extends RoboListActivity implements AlbumModelListen
     @Inject
     private AlbumsModel albumsModel;
 
+    private static final int DIALOG_ACCOUNTS = 0;
+
     private static final String PREF = "MyPrefs";
 
     private static final String GOOGLE_ANDROID = "com.android.email";
-   final HttpTransport transport = AndroidHttp.newCompatibleTransport();
+    final HttpTransport transport = AndroidHttp.newCompatibleTransport();
 
+    GoogleAccountCredential credential;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Google Accounts
+        credential =
+                GoogleAccountCredential.usingOAuth2(this, Collections.singleton("https://picasaweb.google.com/data/"));
+
+        SharedPreferences settings = getPreferences(Context.MODE_PRIVATE);
+//        credential.setSelectedAccountName(settings.getString(PREF_ACCOUNT_NAME, null));
+
+
         albumsModel.addListener(this);
 
-        SharedPreferences settings = getSharedPreferences(PREF, 0);
     }
 
     @Override
@@ -66,7 +84,7 @@ public class AlbumsActivity extends RoboListActivity implements AlbumModelListen
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
@@ -97,16 +115,49 @@ public class AlbumsActivity extends RoboListActivity implements AlbumModelListen
 
     }
 
-    public String[] getGoogleAccounts() {
-        final AccountManager accountManager = AccountManager.get(this.getApplicationContext());
-        Account[] accounts = accountManager.getAccountsByType(GoogleAccountManager.ACCOUNT_TYPE);
-        String[] names = new String[accounts.length];
-        for (int i = 0; i < names.length; i++) {
-            names[i] = accounts[i].name;
-        }
-        return names;
+
+//    @Override
+//    protected Dialog onCreateDialog(int id) {
+//        switch (id) {
+//            case DIALOG_ACCOUNTS:
+//                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//                builder.setTitle("Select a Google account");
+//                final Account[] accounts = getGoogleAccounts();
+//                builder.setItems(accountsNames, new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        gotAccount(GoogleAccountManager., accountsNames[which]);
+//                    }
+//                });
+//                return builder.create();
+//        }
+//        return null;
+//    }
+
+    private void gotAccount(final Account account) {
+        SharedPreferences settings = getSharedPreferences(PREF, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("accountName", account.name);
+        editor.commit();
+        new Thread() {
+
+            @Override
+            public void run() {
+
+            }
+        }.start();
     }
-    public void initHttpTransport(){
+
+    /**
+     * Recherche les compte google présents
+     *
+     * @return les comptes Google
+     */
+    public Account[] getGoogleAccounts() {
+        final AccountManager accountManager = AccountManager.get(this.getApplicationContext());
+        return accountManager.getAccountsByType(GoogleAccountManager.ACCOUNT_TYPE);
+    }
+
+    public void initHttpTransport() {
 
         GoogleCredential credential = new GoogleCredential();
         HttpTransport httpTransport = credential.getTransport();
@@ -135,7 +186,7 @@ public class AlbumsActivity extends RoboListActivity implements AlbumModelListen
 
 //        transport = new HttpTransport();
 
-    //        GoogleHeaders headers = (GoogleHeaders) transport.defaultHeaders;
+        //        GoogleHeaders headers = (GoogleHeaders) transport.defaultHeaders;
 //        headers.setApplicationName("Google-PicasaAndroidAample/1.0");
 //        headers.gdataVersion = "2";
 //        AtomParser parser = new AtomParser();
@@ -154,7 +205,7 @@ public class AlbumsActivity extends RoboListActivity implements AlbumModelListen
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
+                                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             return rootView;
         }
