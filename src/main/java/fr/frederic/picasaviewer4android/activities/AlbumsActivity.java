@@ -17,8 +17,8 @@ import android.widget.Toast;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import com.google.api.client.googleapis.extensions.android.accounts.GoogleAccountManager;
 import com.google.api.client.http.HttpTransport;
-import com.google.api.client.json.JsonFactory;
 import com.google.inject.Inject;
 
 import fr.frederic.picasaviewer4android.R;
@@ -46,9 +46,6 @@ public class AlbumsActivity extends RoboListActivity implements AlbumModelListen
         albumsModel.addListener(this);
 
         SharedPreferences settings = getSharedPreferences(PREF, 0);
-        getAccountNames();
-
-
     }
 
     @Override
@@ -100,9 +97,9 @@ public class AlbumsActivity extends RoboListActivity implements AlbumModelListen
 
     }
 
-    public String[] getAccountNames() {
+    public String[] getGoogleAccounts() {
         final AccountManager accountManager = AccountManager.get(this.getApplicationContext());
-        Account[] accounts = accountManager.getAccounts();
+        Account[] accounts = accountManager.getAccountsByType(GoogleAccountManager.ACCOUNT_TYPE);
         String[] names = new String[accounts.length];
         for (int i = 0; i < names.length; i++) {
             names[i] = accounts[i].name;

@@ -6,26 +6,23 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewPager;
 import android.view.MotionEvent;
 import android.view.View;
-
 import com.google.inject.Module;
 import com.google.inject.util.Modules;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Spy;
-import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
-
 import fr.frederic.picasaviewer4android.activities.ImageActivity;
 import fr.frederic.picasaviewer4android.models.pictures.PicturesModel;
 import fr.frederic.picasaviewer4android.models.pictures.PicturesModelImpl;
 import fr.frederic.picasaviewer4android.modules.PictureModule;
 import fr.frederic.picasaviewer4android.modules.TestPictureModule;
 import fr.frederic.picasaviewer4android.vos.Album;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Spy;
+import org.robolectric.Robolectric;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 import roboguice.inject.InjectResource;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 import static org.robolectric.Robolectric.shadowOf;

@@ -2,28 +2,21 @@ package fr.frederic.picasaviewer4android;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
-
 import com.google.api.client.googleapis.extensions.android.accounts.GoogleAccountManager;
-
+import fr.frederic.picasaviewer4android.activities.AlbumsActivity;
+import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import fr.frederic.picasaviewer4android.activities.AlbumsActivity;
-import fr.frederic.picasaviewer4android.activities.ImageActivity;
-
-import static org.fest.assertions.Assertions.assertThat;
-import static org.mockito.Mockito.when;
+import static org.fest.assertions.api.Assertions.assertThat;
 import static org.robolectric.Robolectric.shadowOf;
 
 /**
- * Created by fnimatchy on 25/02/14.
+ * Created by fminatchy on 25/02/14.
  */
 @RunWith(RobolectricTestRunner.class)
 @Config(manifest = "/src/main/AndroidManifest.xml")
@@ -48,7 +41,8 @@ public class TestAuthorization {
     public void test_comptes() {
        final AlbumsActivity activity = Robolectric.buildActivity(AlbumsActivity.class).create().get();
 
-        activity.getAccountNames();
+       final String[] accountsName = activity.getGoogleAccounts();
+       assertThat(Arrays.asList(accountsName)).containsExactly("compte n°1", "compte n°3");
 
 
     }

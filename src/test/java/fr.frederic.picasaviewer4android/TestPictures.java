@@ -3,21 +3,8 @@ package fr.frederic.picasaviewer4android;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.widget.GridView;
-
 import com.google.inject.Module;
 import com.google.inject.util.Modules;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-import org.mockito.Spy;
-import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import fr.frederic.picasaviewer4android.activities.ImageActivity;
 import fr.frederic.picasaviewer4android.activities.PicturesActivity;
 import fr.frederic.picasaviewer4android.models.pictures.PicturesModel;
@@ -26,12 +13,19 @@ import fr.frederic.picasaviewer4android.modules.PictureModule;
 import fr.frederic.picasaviewer4android.modules.TestPictureModule;
 import fr.frederic.picasaviewer4android.vos.Album;
 import fr.frederic.picasaviewer4android.vos.Picture;
+import java.util.ArrayList;
+import java.util.List;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.mockito.Spy;
+import org.robolectric.Robolectric;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 import roboguice.inject.InjectResource;
 
-import static org.fest.assertions.Assertions.assertThat;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.eq;
+import static org.fest.assertions.api.Assertions.assertThat;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
