@@ -2,37 +2,27 @@ package fr.frederic.picasaviewer4android.activities;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.extensions.android.accounts.GoogleAccountManager;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.http.HttpTransport;
 import com.google.inject.Inject;
-
-import java.util.Collections;
-
 import fr.frederic.picasaviewer4android.R;
 import fr.frederic.picasaviewer4android.lists.ListAlbumsAdapter;
 import fr.frederic.picasaviewer4android.models.AlbumModelListener;
 import fr.frederic.picasaviewer4android.models.albums.AlbumsModel;
 import fr.frederic.picasaviewer4android.vos.Album;
+import java.util.Collections;
 import roboguice.activity.RoboListActivity;
 
 public class AlbumsActivity extends RoboListActivity implements AlbumModelListener {
@@ -42,7 +32,9 @@ public class AlbumsActivity extends RoboListActivity implements AlbumModelListen
 
     private static final int DIALOG_ACCOUNTS = 0;
 
-    private static final String PREF = "MyPrefs";
+   private static final String PREF_ACCOUNT_NAME = "accountName";
+
+   private static final int REQUEST_ACCOUNT_PICKER = 2;
 
     private static final String GOOGLE_ANDROID = "com.android.email";
     final HttpTransport transport = AndroidHttp.newCompatibleTransport();
@@ -59,7 +51,7 @@ public class AlbumsActivity extends RoboListActivity implements AlbumModelListen
                 GoogleAccountCredential.usingOAuth2(this, Collections.singleton("https://picasaweb.google.com/data/"));
 
         SharedPreferences settings = getPreferences(Context.MODE_PRIVATE);
-//        credential.setSelectedAccountName(settings.getString(PREF_ACCOUNT_NAME, null));
+        credential.setSelectedAccountName(settings.getString(PREF_ACCOUNT_NAME, null));
 
 
         albumsModel.addListener(this);
@@ -70,6 +62,7 @@ public class AlbumsActivity extends RoboListActivity implements AlbumModelListen
     protected void onStart() {
         super.onStart();
         this.setListAdapter(new ListAlbumsAdapter(this, albumsModel.getAllAlbums()));
+       chooseAccount();
     }
 
     @Override
@@ -102,6 +95,20 @@ public class AlbumsActivity extends RoboListActivity implements AlbumModelListen
         return super.onOptionsItemSelected(item);
     }
 
+
+   @Override
+   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+      super.onActivityResult(requestCode, resultCode, data);
+      switch (requestCode) {
+         case REQUEST_ACCOUNT_PICKER :
+
+            break;
+      }
+   }
+
+   public void chooseAccount() {
+      startActivityForResult(credential.newChooseAccountIntent(), REQUEST_ACCOUNT_PICKER);
+   }
     @Override
     public void updateData() {
         Toast.makeText(this, "Donnees mises à jour", 10);
@@ -133,19 +140,19 @@ public class AlbumsActivity extends RoboListActivity implements AlbumModelListen
 //        return null;
 //    }
 
-    private void gotAccount(final Account account) {
-        SharedPreferences settings = getSharedPreferences(PREF, 0);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString("accountName", account.name);
-        editor.commit();
-        new Thread() {
-
-            @Override
-            public void run() {
-
-            }
-        }.start();
-    }
+//    private void gotAccount(final Account account) {
+//        SharedPreferences settings = getSharedPreferences(PREF, 0);
+//        SharedPreferences.Editor editor = settings.edit();
+//        editor.putString("accountName", account.name);
+//        editor.commit();
+//        new Thread() {
+//
+//            @Override
+//            public void run() {
+//
+//            }
+//        }.start();
+//    }
 
     /**
      * Recherche les compte google présents
@@ -163,7 +170,6 @@ public class AlbumsActivity extends RoboListActivity implements AlbumModelListen
         HttpTransport httpTransport = credential.getTransport();
 //        final Account[] accounts = accountManager.getAccounts();
 
-        SharedPreferences settings = getSharedPreferences(PREF, 0);
 
 //        HttpTransport httpTransport = new NetHttpTransport();
 //        JacksonFactory jsonFactory = new JacksonFactory();
