@@ -66,7 +66,7 @@ public class TestImages extends AbstractTest{
     @Test
     public void scroll_image() {
         final Intent intent = new Intent(Robolectric.getShadowApplication().getApplicationContext(), ImageActivity.class);
-        final Album album = new Album(1, "album_1", image);
+        final Album album = new Album(Integer.toString(1), "album_1", image);
         intent.putExtra("album", album);
         intent.putExtra("position", 2);
         intent.putExtra("imageId", 2L);

@@ -9,13 +9,13 @@ import java.io.Serializable;
  */
 public class Album implements Serializable
 {
-   private long id;
+   private String id;
 
    private String albumName;
 
    private transient Drawable image;
 
-   public Album(long id, String albumName, Drawable image)
+   public Album(String id, String albumName, Drawable image)
    {
       this.id = id;
 
@@ -25,7 +25,7 @@ public class Album implements Serializable
    }
 
 
-   public long getId()
+   public String getId()
    {
       return id;
    }
@@ -40,36 +40,24 @@ public class Album implements Serializable
       return image;
    }
 
-   @Override
-   public boolean equals(Object o)
-   {
-      if (this == o)
-      {
-         return true;
-      }
-      if (!(o instanceof Album))
-      {
-         return false;
-      }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Album)) return false;
 
-      Album album = (Album) o;
+        Album album = (Album) o;
 
-      if (id != album.id)
-      {
-         return false;
-      }
+        if (!id.equals(album.id)) return false;
 
-      return true;
-   }
+        return true;
+    }
 
-   @Override
-   public int hashCode()
-   {
-      return (int) (id ^ (id >>> 32));
-   }
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 
-
-   @Override
+    @Override
    public String toString()
    {
       return "Album{" +

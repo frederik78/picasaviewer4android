@@ -3,6 +3,7 @@ package fr.frederic.picasaviewer4android.models.albums;
 import java.util.List;
 
 import fr.frederic.picasaviewer4android.models.AlbumModelListener;
+import fr.frederic.picasaviewer4android.util.TechnicalException;
 import fr.frederic.picasaviewer4android.vos.Album;
 
 /**
@@ -19,8 +20,9 @@ public interface AlbumsModel {
     /**
      * Retourne la liste des albums
      * @return une liste d'albums
+     * @param username
      */
-    List<Album> getAllAlbums();
+    List<Album> getAllAlbums(String username) throws TechnicalException;
 
     /**
      * Retourne un album
@@ -32,7 +34,7 @@ public interface AlbumsModel {
     /**
      * Indique les changements de données
      */
-    void notifyUpdate();
+    void notifyUpdate() throws TechnicalException;
 
     /**
      * Ajoute un écouteur

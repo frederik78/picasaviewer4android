@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import fr.frederic.picasaviewer4android.models.AlbumModelListener;
+import fr.frederic.picasaviewer4android.util.TechnicalException;
 import fr.frederic.picasaviewer4android.vos.Album;
 
 /**
@@ -25,13 +26,13 @@ public class AbstractAlbumsModel implements AlbumsModel {
     }
 
     @Override
-    public List<Album> getAllAlbums() {
+    public List<Album> getAllAlbums(String username) throws TechnicalException {
         final List<Album> albums = new ArrayList<>();
 
         final Drawable drawable = BitmapDrawable.createFromStream(getClass().getResourceAsStream("/drawable-mdpi/ic_launcher.png"),"ic_launcher.png");
         for(int i =0; i < 10; i++)
         {
-            albums.add(new Album(i, "album_" +i, drawable));
+            albums.add(new Album(Integer.valueOf(i).toString(), "album_" +i, drawable));
         }
         return albums;
     }
@@ -39,11 +40,11 @@ public class AbstractAlbumsModel implements AlbumsModel {
     @Override
     public Album getAlbum(long id) {
         final Drawable drawable = BitmapDrawable.createFromStream(getClass().getResourceAsStream("/drawable-mdpi/ic_launcher.png"),"ic_launcher.png");
-        return new Album(id, "album_"+id, drawable);
+        return new Album(Long.valueOf(id).toString(), "album_"+id, drawable);
     }
 
     @Override
-    public void notifyUpdate() {
+    public void notifyUpdate() throws TechnicalException {
         for(AlbumModelListener listener : albumModelListeners)
         {
             listener.updateData();

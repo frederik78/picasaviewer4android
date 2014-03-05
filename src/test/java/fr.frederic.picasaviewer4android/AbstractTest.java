@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.Robolectric;
 
+import fr.frederic.picasaviewer4android.util.TechnicalException;
 import roboguice.RoboGuice;
 import roboguice.inject.RoboInjector;
 
@@ -16,6 +17,9 @@ public abstract class AbstractTest {
 
     protected Module roboGuiceModule;
 
+    /**
+     * Initialise RoboGuice
+     */
     protected void init()
     {
         MockitoAnnotations.initMocks(this);
@@ -30,8 +34,14 @@ public abstract class AbstractTest {
 
     public abstract Module addCustomeModules();
 
+    /**
+     * A surcharger
+     */
+    protected void customizeSetup() throws TechnicalException {};
+
     @Before
-    public void setup() {
+    public void setup() throws TechnicalException {
         init();
+        customizeSetup();
     }
 }

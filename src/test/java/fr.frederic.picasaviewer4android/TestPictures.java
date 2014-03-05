@@ -54,7 +54,7 @@ public class TestPictures extends AbstractTest{
     public void rechercher_images(){
 
         final List<Picture> pictures = create50Pictures();
-        final Album album = new Album(1,"album_1", image);
+        final Album album = new Album(Integer.toString(1),"album_1", image);
         when(picturesModel.getAllPictures(album)).thenReturn(pictures);
         final Intent intent = new Intent(Robolectric.getShadowApplication().getApplicationContext(), PicturesActivity.class);
         intent.putExtra("album", album);
@@ -69,7 +69,7 @@ public class TestPictures extends AbstractTest{
         when(picture.getDrawable()).thenReturn(image);
         when(picturesModel.getPicture(anyLong())).thenReturn(eq(picture));
 
-        final Album album = new Album(1,"album_1", image);
+        final Album album = new Album(Integer.toString(1),"album_1", image);
         final Intent intent = new Intent(Robolectric.getShadowApplication().getApplicationContext(), PicturesActivity.class);
         intent.putExtra("album", album);
         picturesActivity = Robolectric.buildActivity(PicturesActivity.class).withIntent(intent).create().get();
