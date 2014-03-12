@@ -1,5 +1,9 @@
 package fr.frederic.picasaviewer4android.models.albums;
 
+import com.google.gdata.util.ServiceException;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.List;
 
 import fr.frederic.picasaviewer4android.models.AlbumModelListener;
@@ -22,7 +26,7 @@ public interface AlbumsModel {
      * @return une liste d'albums
      * @param username
      */
-    List<Album> getAllAlbums(String username) throws TechnicalException;
+    List<Album> getAllAlbums(String username) throws TechnicalException, IOException, ServiceException;
 
     /**
      * Retourne un album

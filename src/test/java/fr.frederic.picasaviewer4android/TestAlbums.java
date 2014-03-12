@@ -60,7 +60,7 @@ public class TestAlbums extends AbstractTest
     @Test
    public void nombre_elements_dans_adapter() throws TechnicalException {
 
-      when(albumsModel.getAllAlbums("default")).thenReturn(create50Albums());
+//      when(albumsModel.getAllAlbums("default")).thenReturn(create50Albums());
       activity = Robolectric.buildActivity(AlbumsActivity.class)
             .create().get();
       shadowOf(activity).callOnStart();
@@ -70,7 +70,7 @@ public class TestAlbums extends AbstractTest
    @Test
    public void contenu_liste_albums() throws TechnicalException {
       final List<Album> albums = create50Albums();
-      when(albumsModel.getAllAlbums("default")).thenReturn(albums);
+//      when(albumsModel.getAllAlbums("default")).thenReturn(albums);
       activity = Robolectric.buildActivity(AlbumsActivity.class)
             .create().get();
       shadowOf(activity).callOnStart();
@@ -82,7 +82,7 @@ public class TestAlbums extends AbstractTest
    public void changement_contenu_suite_a_changement_donnees() throws TechnicalException {
 
       final List<Album> albums = create50Albums();
-      when(albumsModel.getAllAlbums("default")).thenReturn(albums);
+//      when(albumsModel.getAllAlbums("default")).thenReturn(albums);
       activity = Robolectric.buildActivity(AlbumsActivity.class)
             .create().get();
       shadowOf(activity).callOnStart();
@@ -90,7 +90,7 @@ public class TestAlbums extends AbstractTest
       assertThat(activity.getListView().getItemAtPosition(25)).isNotEqualTo(albums.get(26));
 
       final List<Album> albums1 = createAnother50Albums();
-      when(albumsModel.getAllAlbums("default")).thenReturn(albums1);
+//      when(albumsModel.getAllAlbums("default")).thenReturn(albums1);
       albumsModel.notifyUpdate();
       assertThat(activity.getListView().getItemAtPosition(25)).isEqualTo(albums1.get(25));
       assertThat(activity.getListView().getItemAtPosition(25)).isNotEqualTo(albums1.get(26));
