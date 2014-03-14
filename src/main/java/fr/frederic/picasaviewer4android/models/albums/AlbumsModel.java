@@ -1,5 +1,6 @@
 package fr.frederic.picasaviewer4android.models.albums;
 
+import com.google.gdata.data.photos.AlbumEntry;
 import com.google.gdata.util.ServiceException;
 
 import java.io.IOException;

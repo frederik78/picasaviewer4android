@@ -4,11 +4,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
 import com.google.gdata.data.photos.AlbumEntry;
-import com.google.gdata.data.photos.UserFeed;
-import com.google.gdata.util.ServiceException;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -32,7 +28,7 @@ public class AbstractAlbumsModel implements AlbumsModel {
     }
 
     @Override
-    public List<Album> getAllAlbums(String username) throws TechnicalException, IOException, ServiceException {
+    public List<Album> getAllAlbums(String username) throws TechnicalException {
         final List<Album> albums = new ArrayList<>();
 
         final Drawable drawable = BitmapDrawable.createFromStream(getClass().getResourceAsStream("/drawable-mdpi/ic_launcher.png"),"ic_launcher.png");

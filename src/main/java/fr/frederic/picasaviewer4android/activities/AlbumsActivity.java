@@ -83,11 +83,15 @@ public class AlbumsActivity extends RoboListActivity implements AlbumModelListen
     @Override
     protected void onStart() {
         super.onStart();
-        try {
-            this.setListAdapter(new ListAlbumsAdapter(this, albumsModel.getAllAlbums("default")));
-        } catch (TechnicalException e) {
-            throw new RuntimeException("Impossible d'obtenir les albums", e);
-        }
+//        try {
+//            this.setListAdapter(new ListAlbumsAdapter(this, albumsModel.getAllAlbums("default")));
+//        } catch (TechnicalException e) {
+//            throw new RuntimeException("Impossible d'obtenir les albums", e);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (com.google.gdata.util.ServiceException e) {
+//            e.printStackTrace();
+//        }
         //        chooseAccount();
 //        showAccountPicker();
     }
@@ -220,7 +224,13 @@ public class AlbumsActivity extends RoboListActivity implements AlbumModelListen
     @Override
     public void updateData() throws TechnicalException {
         Toast.makeText(this, "Donnees mises à jour", 10);
-        setListAdapter(new ListAlbumsAdapter(this, albumsModel.getAllAlbums("default")));
+//        try {
+//            setListAdapter(new ListAlbumsAdapter(this, albumsModel.getAllAlbums("default")));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (com.google.gdata.util.ServiceException e) {
+//            e.printStackTrace();
+//        }
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

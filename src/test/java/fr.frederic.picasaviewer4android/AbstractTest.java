@@ -25,7 +25,7 @@ public abstract class AbstractTest {
         MockitoAnnotations.initMocks(this);
 //
 //        roboGuiceModule = RoboGuice.newDefaultRoboModule(Robolectric.application);
-//        final Module testModule = addCustomeModules();
+//        final Module testModule = init();
 //
 //        RoboGuice.setBaseApplicationInjector(Robolectric.application, RoboGuice.DEFAULT_STAGE, testModule);
 //        RoboInjector injector = RoboGuice.getInjector(Robolectric.application);
