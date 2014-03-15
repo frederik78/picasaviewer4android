@@ -23,25 +23,19 @@ public abstract class AbstractTest {
     protected void init()
     {
         MockitoAnnotations.initMocks(this);
-//
-//        roboGuiceModule = RoboGuice.newDefaultRoboModule(Robolectric.application);
-//        final Module testModule = init();
-//
-//        RoboGuice.setBaseApplicationInjector(Robolectric.application, RoboGuice.DEFAULT_STAGE, testModule);
-//        RoboInjector injector = RoboGuice.getInjector(Robolectric.application);
-//        injector.injectMembersWithoutViews(this);
+
+        roboGuiceModule = RoboGuice.newDefaultRoboModule(Robolectric.application);
+        final Module testModule = addCustomeModules();
+
+        RoboGuice.setBaseApplicationInjector(Robolectric.application, RoboGuice.DEFAULT_STAGE, testModule);
+        RoboInjector injector = RoboGuice.getInjector(Robolectric.application);
+        injector.injectMembersWithoutViews(this);
     }
 
     public abstract Module addCustomeModules();
 
-    /**
-     * A surcharger
-     */
-    protected void customizeSetup() throws TechnicalException {};
-
     @Before
     public void setup() throws TechnicalException {
         init();
-        customizeSetup();
     }
 }

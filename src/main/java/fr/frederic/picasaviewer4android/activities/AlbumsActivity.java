@@ -7,7 +7,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -24,17 +28,16 @@ import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccoun
 import com.google.api.client.http.HttpTransport;
 import com.google.inject.Inject;
 
+import java.io.IOException;
+import java.util.Collections;
+import java.util.logging.Logger;
+
 import fr.frederic.picasaviewer4android.R;
 import fr.frederic.picasaviewer4android.lists.ListAlbumsAdapter;
 import fr.frederic.picasaviewer4android.models.AlbumModelListener;
 import fr.frederic.picasaviewer4android.models.albums.AlbumsModel;
 import fr.frederic.picasaviewer4android.util.TechnicalException;
 import fr.frederic.picasaviewer4android.vos.Album;
-
-import java.io.IOException;
-import java.util.Collections;
-import java.util.logging.Logger;
-
 import roboguice.activity.RoboListActivity;
 
 public class AlbumsActivity extends RoboListActivity implements AlbumModelListener {
@@ -83,15 +86,11 @@ public class AlbumsActivity extends RoboListActivity implements AlbumModelListen
     @Override
     protected void onStart() {
         super.onStart();
-//        try {
-//            this.setListAdapter(new ListAlbumsAdapter(this, albumsModel.getAllAlbums("default")));
-//        } catch (TechnicalException e) {
-//            throw new RuntimeException("Impossible d'obtenir les albums", e);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (com.google.gdata.util.ServiceException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            this.setListAdapter(new ListAlbumsAdapter(this, albumsModel.getAllAlbums("default")));
+        } catch (TechnicalException e) {
+            throw new RuntimeException("Impossible d'obtenir les albums", e);
+        }
         //        chooseAccount();
 //        showAccountPicker();
     }
@@ -173,7 +172,7 @@ public class AlbumsActivity extends RoboListActivity implements AlbumModelListen
         switch (requestCode) {
             case REQUEST_CODE_PICK_ACCOUNT:
                 if (data != null && data.getExtras() != null) {
-                    final String accountName  = data.getExtras().getString(AccountManager.KEY_ACCOUNT_NAME);
+                    final String accountName = data.getExtras().getString(AccountManager.KEY_ACCOUNT_NAME);
                     if (accountName != null) {
                         credential.setSelectedAccountName(accountName);
                         SharedPreferences settings = getPreferences(Context.MODE_PRIVATE);
@@ -224,13 +223,7 @@ public class AlbumsActivity extends RoboListActivity implements AlbumModelListen
     @Override
     public void updateData() throws TechnicalException {
         Toast.makeText(this, "Donnees mises à jour", 10);
-//        try {
-//            setListAdapter(new ListAlbumsAdapter(this, albumsModel.getAllAlbums("default")));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (com.google.gdata.util.ServiceException e) {
-//            e.printStackTrace();
-//        }
+        setListAdapter(new ListAlbumsAdapter(this, albumsModel.getAllAlbums("default")));
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

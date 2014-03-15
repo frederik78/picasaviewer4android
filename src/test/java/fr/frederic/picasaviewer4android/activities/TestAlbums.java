@@ -1,27 +1,31 @@
-package fr.frederic.picasaviewer4android;
+package fr.frederic.picasaviewer4android.activities;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.widget.ListView;
+
 import com.google.inject.Module;
 import com.google.inject.util.Modules;
-import fr.frederic.picasaviewer4android.activities.AlbumsActivity;
-import fr.frederic.picasaviewer4android.activities.PicturesActivity;
-import fr.frederic.picasaviewer4android.models.albums.AbstractAlbumsModel;
-import fr.frederic.picasaviewer4android.models.albums.AlbumsModel;
-import fr.frederic.picasaviewer4android.models.albums.AlbumsModelImpl;
-import fr.frederic.picasaviewer4android.modules.AlbumModule;
-import fr.frederic.picasaviewer4android.modules.TestAlbumModule;
-import fr.frederic.picasaviewer4android.util.TechnicalException;
-import fr.frederic.picasaviewer4android.vos.Album;
-import java.util.ArrayList;
-import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Spy;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import fr.frederic.picasaviewer4android.R;
+import fr.frederic.picasaviewer4android.activities.AlbumsActivity;
+import fr.frederic.picasaviewer4android.activities.PicturesActivity;
+import fr.frederic.picasaviewer4android.models.albums.AbstractAlbumsModel;
+import fr.frederic.picasaviewer4android.models.albums.AlbumsModel;
+import fr.frederic.picasaviewer4android.modules.AlbumModule;
+import fr.frederic.picasaviewer4android.modules.TestAlbumModule;
+import fr.frederic.picasaviewer4android.util.TechnicalException;
+import fr.frederic.picasaviewer4android.vos.Album;
 import roboguice.inject.InjectResource;
 
 import static org.fest.assertions.api.Assertions.assertThat;
@@ -34,7 +38,7 @@ import static org.robolectric.Robolectric.shadowOf;
  */
 @RunWith(RobolectricTestRunner.class)
 @Config(manifest = "/src/main/AndroidManifest.xml")
-public class TestAlbums extends AbstractTest
+public class TestAlbums extends fr.frederic.picasaviewer4android.AbstractTest
 {
 
    private AlbumsActivity activity;
@@ -52,15 +56,10 @@ public class TestAlbums extends AbstractTest
       return Modules.override(albumModule).with(new TestAlbumModule(albumsModel));
    }
 
-    @Override
-    protected void customizeSetup() throws TechnicalException {
-//        albumsModel =
-    }
-
     @Test
    public void nombre_elements_dans_adapter() throws TechnicalException {
 
-//      when(albumsModel.getAllAlbums("default")).thenReturn(create50Albums());
+      when(albumsModel.getAllAlbums("default")).thenReturn(create50Albums());
       activity = Robolectric.buildActivity(AlbumsActivity.class)
             .create().get();
       shadowOf(activity).callOnStart();
@@ -70,7 +69,7 @@ public class TestAlbums extends AbstractTest
    @Test
    public void contenu_liste_albums() throws TechnicalException {
       final List<Album> albums = create50Albums();
-//      when(albumsModel.getAllAlbums("default")).thenReturn(albums);
+      when(albumsModel.getAllAlbums("default")).thenReturn(albums);
       activity = Robolectric.buildActivity(AlbumsActivity.class)
             .create().get();
       shadowOf(activity).callOnStart();
@@ -82,7 +81,7 @@ public class TestAlbums extends AbstractTest
    public void changement_contenu_suite_a_changement_donnees() throws TechnicalException {
 
       final List<Album> albums = create50Albums();
-//      when(albumsModel.getAllAlbums("default")).thenReturn(albums);
+      when(albumsModel.getAllAlbums("default")).thenReturn(albums);
       activity = Robolectric.buildActivity(AlbumsActivity.class)
             .create().get();
       shadowOf(activity).callOnStart();
@@ -90,7 +89,7 @@ public class TestAlbums extends AbstractTest
       assertThat(activity.getListView().getItemAtPosition(25)).isNotEqualTo(albums.get(26));
 
       final List<Album> albums1 = createAnother50Albums();
-//      when(albumsModel.getAllAlbums("default")).thenReturn(albums1);
+      when(albumsModel.getAllAlbums("default")).thenReturn(albums1);
       albumsModel.notifyUpdate();
       assertThat(activity.getListView().getItemAtPosition(25)).isEqualTo(albums1.get(25));
       assertThat(activity.getListView().getItemAtPosition(25)).isNotEqualTo(albums1.get(26));

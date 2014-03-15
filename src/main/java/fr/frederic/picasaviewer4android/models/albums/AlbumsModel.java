@@ -27,7 +27,7 @@ public interface AlbumsModel {
      * @return une liste d'albums
      * @param username
      */
-    List<Album> getAllAlbums(String username) throws TechnicalException, IOException, ServiceException;
+    List<Album> getAllAlbums(String username) throws TechnicalException;
 
     /**
      * Retourne un album

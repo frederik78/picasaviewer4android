@@ -5,8 +5,8 @@ import com.google.inject.AbstractModule;
 import fr.frederic.picasaviewer4android.models.albums.AlbumsModel;
 
 /**
- * Created by Frederic on 05/02/14.
- */
+* Created by Frederic on 05/02/14.
+*/
 public class TestAlbumModule extends AbstractModule {
 
     final AlbumsModel albumsModel;

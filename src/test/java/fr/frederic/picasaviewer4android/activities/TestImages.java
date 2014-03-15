@@ -1,4 +1,4 @@
-package fr.frederic.picasaviewer4android;
+package fr.frederic.picasaviewer4android.activities;
 
 import android.content.Intent;
 import android.graphics.Point;
@@ -8,6 +8,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import com.google.inject.Module;
 import com.google.inject.util.Modules;
+
+import fr.frederic.picasaviewer4android.AbstractTest;
+import fr.frederic.picasaviewer4android.R;
 import fr.frederic.picasaviewer4android.activities.ImageActivity;
 import fr.frederic.picasaviewer4android.models.pictures.PicturesModel;
 import fr.frederic.picasaviewer4android.models.pictures.PicturesModelImpl;
@@ -32,7 +35,7 @@ import static org.robolectric.Robolectric.shadowOf;
  */
 @RunWith(RobolectricTestRunner.class)
 @Config(manifest = "/src/main/AndroidManifest.xml")
-public class TestImages extends AbstractTest{
+public class TestImages extends AbstractTest {
 
     private ImageActivity activity;
 

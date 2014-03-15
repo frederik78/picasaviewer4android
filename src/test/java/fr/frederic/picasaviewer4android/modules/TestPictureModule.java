@@ -6,8 +6,8 @@ import fr.frederic.picasaviewer4android.models.albums.AlbumsModel;
 import fr.frederic.picasaviewer4android.models.pictures.PicturesModel;
 
 /**
- * Created by Frederic on 05/02/14.
- */
+* Created by Frederic on 05/02/14.
+*/
 public class TestPictureModule extends AbstractModule {
 
     final PicturesModel picturesModel;
