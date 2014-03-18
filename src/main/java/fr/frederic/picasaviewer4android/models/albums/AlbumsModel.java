@@ -23,6 +23,14 @@ public interface AlbumsModel {
     int getCount();
 
     /**
+     * Identification
+     * @param username login
+     * @param password mot de passe
+     * TechnicalException en cas de mauvaise identification
+     */
+    void setCredential(String username, String password) throws TechnicalException;
+
+    /**
      * Retourne la liste des albums
      * @return une liste d'albums
      * @param username

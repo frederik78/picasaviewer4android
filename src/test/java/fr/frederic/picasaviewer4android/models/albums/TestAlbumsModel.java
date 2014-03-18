@@ -73,7 +73,7 @@ public class TestAlbumsModel {
             @Override
             protected void configure() {
                 bind(PicasawebService.class).toInstance(picasawebService);
-                bind(AlbumsModel.class).to(AlbumsModelImpl.class);
+                bind(AlbumsModel.class).toInstance(new AlbumsModelImpl());
             }
         };
 
@@ -84,7 +84,6 @@ public class TestAlbumsModel {
         RoboInjector injector = RoboGuice.getInjector(Robolectric.application);
         injector.injectMembers(this);
     }
-
 
 
     @Test

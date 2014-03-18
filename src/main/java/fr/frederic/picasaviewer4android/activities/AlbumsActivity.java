@@ -87,7 +87,9 @@ public class AlbumsActivity extends RoboListActivity implements AlbumModelListen
     protected void onStart() {
         super.onStart();
         try {
-            this.setListAdapter(new ListAlbumsAdapter(this, albumsModel.getAllAlbums("default")));
+           // credential.getSelectedAccount();
+            albumsModel.setCredential("XXXX", "XXXXX");
+            this.setListAdapter(new ListAlbumsAdapter(this, albumsModel.getAllAlbums("frederic.minatchy")));
         } catch (TechnicalException e) {
             throw new RuntimeException("Impossible d'obtenir les albums", e);
         }

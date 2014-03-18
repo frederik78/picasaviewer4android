@@ -28,6 +28,12 @@ public class AbstractAlbumsModel implements AlbumsModel {
     }
 
     @Override
+    public void setCredential(String username, String password) throws TechnicalException {
+
+    }
+
+
+    @Override
     public List<Album> getAllAlbums(String username) throws TechnicalException {
         final List<Album> albums = new ArrayList<>();
 

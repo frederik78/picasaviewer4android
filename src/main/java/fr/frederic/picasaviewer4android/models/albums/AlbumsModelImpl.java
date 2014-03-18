@@ -4,6 +4,7 @@ import com.google.gdata.client.photos.PicasawebService;
 import com.google.gdata.data.photos.AlbumEntry;
 import com.google.gdata.data.photos.GphotoEntry;
 import com.google.gdata.data.photos.UserFeed;
+import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -31,8 +32,6 @@ public class AlbumsModelImpl extends AbstractAlbumsModel {
 
     private static ExecutorService executor = Executors.newFixedThreadPool(2);
 
-//    @Inject
-//    UserFeed userFeed;
 
     @Inject
     private PicasawebService picasawebService;
@@ -41,17 +40,34 @@ public class AlbumsModelImpl extends AbstractAlbumsModel {
      * Constructeur
      *
      * @param username login utilisateur
-     *                 //     * @param password mot de passe utilisateur
+     * @param password mot de passe utilisateur
      * @throws TechnicalException lorsqu'il y a une erreur d'authentification
      */
-//    @Inject
-//    public AlbumsModelImpl(String username, String password) throws TechnicalException {
-//        try {
-//            picasawebService.getPicasawebService().setUserCredentials(username, password);
-//        } catch (AuthenticationException e) {
-//            throw new TechnicalException(e);
-//        }
-//    }
+    public void setCredential(final String username, final String password) throws TechnicalException {
+        if (picasawebService != null) {
+            final Callable<Void> callable = new Callable<Void>() {
+
+                @Override
+                public Void call() throws Exception {
+                    try {
+                        picasawebService.setUserCredentials(username, password);
+                        return null;
+                    } catch (AuthenticationException e) {
+                        throw new TechnicalException(e);
+                    }
+                }
+            };
+            Future<Void> future = executor.submit(callable);
+            try {
+                future.get();
+            } catch (InterruptedException e) {
+                throw new TechnicalException(e);
+            } catch (ExecutionException e) {
+                throw new TechnicalException(e);
+            }
+        }
+    }
+
     @Override
     public List<Album> getAllAlbums(final String username) throws TechnicalException {
         final Callable<List<Album>> callableAlbums = new Callable<List<Album>>() {
@@ -91,6 +107,7 @@ public class AlbumsModelImpl extends AbstractAlbumsModel {
             List<GphotoEntry> entries = userFeed.getEntries();
             for (GphotoEntry entry : entries) {
                 final AlbumEntry ae = new AlbumEntry(entry);
+                ae.getMediaContents().get(0).getUrl();
                 Album album = new Album(ae.getId(), ae.getName(), null);
                 albums.add(album);
             }
